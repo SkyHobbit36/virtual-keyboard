@@ -1,3 +1,7 @@
+body {
+    font-family: Arial, sans-serif;
+}
+
 .app {
     width: 950px;
     height: 600px;
@@ -5,8 +9,24 @@
     top: 50%;
     left: 50%;
     transform: translateX(-50%) translateY(-50%);
-    border: 1px solid rgb(214, 214, 214);
-    background-color:rgb(252, 252, 252);
+    display: flex;
+    flex-direction: column;
+}
+
+.desctiption {
+    font-size: 1.1rem;
+    line-height: .1rem;
+    text-align: center;
+}
+
+.display {
+    flex-grow: 2;
+    resize: none;
+    margin-bottom: 10px;
+    padding: 20px;
+    font-size: 1.3rem;
+    letter-spacing: .1rem;
+
 }
 
 .keyboard {
@@ -14,12 +34,7 @@
     flex-wrap: wrap;
     column-gap: 10px;
     justify-content: space-between;
-    gap: 10px;
-}
-.display {
-    width: 100%;
-    height: 50%;
-
+    gap: 10px; 
 }
  
 .btn {
@@ -31,4 +46,49 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    border: none;
+    cursor: pointer;
+    font-size: 1.1rem;
+    line-height: 1.1rem;
 }
+
+.l-text {
+    font-size: .9rem;
+    line-height: 0.9rem;
+}
+.btn:active {
+    background-color: rgb(165, 116, 10);
+}
+
+.backspace {
+    width: 100px;
+}
+.tab {
+    width: 70px;
+}
+.del {
+    width: 70px;
+}
+.capslock {
+    width: 80px;
+}
+.enter {
+    width: 100px;
+}
+.shift {
+    width: 130px;
+}
+.ctrl {
+    width: 70px;
+}
+.alt {
+    width: 70px;
+}
+.win {
+    width: 70px;
+}
+.space {
+    flex-grow: 2;
+}
+
+/*# sourceMappingURL=main.css.map*/

@@ -1,17 +1,83 @@
 import './style.css'
+import Element from './Elements/Element'
+import Button from './Elements/Button'
 
-const app = document.querySelector('.app')
-
-const display = document.createElement('textarea')
-display.className = 'display'
-app.append(display)
-
-const keyboard = document.createElement('div')
-keyboard.className = 'keyboard'
-app.append(keyboard)
-
-
-
-for (let i = 0; i < 70; i++) {
-    keyboard.innerHTML += `<div class="btn">${i}</div>`
+const addElement = (addTo, el, className, text, params) => {
+    const item = new Element(el, className, text, params)
+    addTo.append(item)
+    return item
 }
+
+const app = addElement(document.body, 'div', 'app')
+addElement(app, 'div', 'desctiption', '<p>Клавиатура сделана под ОС Windows</p><p>Чтобы поменять язык ввода нажмите Shift + Ctrl</p>')
+const display = addElement(app, 'textarea', 'display', '', { disabled: true })
+const keyboard = addElement(app, 'div', 'keyboard')
+Button.container = keyboard
+Button.display = display
+
+new Button('~')
+new Button('1')
+new Button('2')
+new Button('3')
+new Button('4')
+new Button('5')
+new Button('6')
+new Button('7')
+new Button('8')
+new Button('9')
+new Button('0')
+new Button('-')
+new Button('=')
+new Button('=')
+new Button('Backspace', ['backspace', 'l-text'])
+new Button('TAB', 'tab')
+new Button('q')
+new Button('w')
+new Button('e')
+new Button('r')
+new Button('t')
+new Button('y')
+new Button('u')
+new Button('i')
+new Button('o')
+new Button('p')
+new Button('[')
+new Button(']')
+new Button('\\')
+new Button('DEL', 'del')
+new Button('Caps Lock', ['capslock', 'l-text'])
+new Button('a')
+new Button('s')
+new Button('d')
+new Button('f')
+new Button('g')
+new Button('g')
+new Button('h')
+new Button('j')
+new Button('k')
+new Button('l')
+new Button(';')
+new Button('\'')
+new Button('Enter', ['enter', 'l-text'])
+new Button('Shift', ['shift', 'l-text'])
+new Button('z')
+new Button('x')
+new Button('c')
+new Button('v')
+new Button('b')
+new Button('n')
+new Button('m')
+new Button(',')
+new Button('.')
+new Button('/')
+new Button('▲')
+new Button('Shift', ['shift', 'l-text'])
+new Button('Ctrl', ['ctrl', 'l-text'])
+new Button('Win', ['win', 'l-text'])
+new Button('Alt', ['alt', 'l-text'])
+new Button('', 'space')
+new Button('Alt', ['alt', 'l-text'])
+new Button('◄')
+new Button('▼')
+new Button('►')
+new Button('Ctrl', ['ctrl', 'l-text'])

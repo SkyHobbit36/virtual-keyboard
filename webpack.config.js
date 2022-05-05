@@ -10,9 +10,10 @@ if (process.env.NODE_ENV === 'production') {
 module.exports = {
     entry: './src/index.js',
     output: {
-        path: path.resolve(__dirname, './'),
+        path: path.resolve(__dirname, './build/'),
         filename: 'index.js'
     },
+    devtool: 'source-map',
     mode: mode,
     plugins: [
         new MiniCssExtractPlugin({
