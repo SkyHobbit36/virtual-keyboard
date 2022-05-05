@@ -1,1 +1,0 @@
-!function(){"use strict";var e=document.querySelector(".app"),a=document.createElement("textarea");a.className="display",e.append(a);var t=document.createElement("div");t.className="keyboard",e.append(t);for(var c=0;c<70;c++)t.innerHTML+='<div class="btn">'.concat(c,"</div>")}();
