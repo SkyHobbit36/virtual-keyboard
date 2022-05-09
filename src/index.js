@@ -1,83 +1,104 @@
-import './style.css'
-import Element from './Elements/Element'
-import Button from './Elements/Button'
+import './style.css';
+import { display, keyboard } from './scripts/init';
+import TextButton from './scripts/Element/Button/TextButton/TextButton';
+import DynamicButton from './scripts/Element/Button/DynamicButton/DynamicButton';
+import { keysObjectList, keysTextButtontList } from './scripts/data/keysObjectList';
 
-const addElement = (addTo, el, className, text, params) => {
-    const item = new Element(el, className, text, params)
-    addTo.append(item)
-    return item
-}
+let caps = false;
+const changeSymbols = () => {
+  keysTextButtontList.forEach((obj) => {
+    obj.setSymbol();
+  });
+};
 
-const app = addElement(document.body, 'div', 'app')
-addElement(app, 'div', 'desctiption', '<p>Клавиатура сделана под ОС Windows</p><p>Чтобы поменять язык ввода нажмите Shift + Ctrl</p>')
-const display = addElement(app, 'textarea', 'display', '', { disabled: true })
-const keyboard = addElement(app, 'div', 'keyboard')
-Button.container = keyboard
-Button.display = display
+const removeActiveClass = (code) => {
+  const obj = keysObjectList[code];
+  if (!obj) return;
 
-new Button('~')
-new Button('1')
-new Button('2')
-new Button('3')
-new Button('4')
-new Button('5')
-new Button('6')
-new Button('7')
-new Button('8')
-new Button('9')
-new Button('0')
-new Button('-')
-new Button('=')
-new Button('=')
-new Button('Backspace', ['backspace', 'l-text'])
-new Button('TAB', 'tab')
-new Button('q')
-new Button('w')
-new Button('e')
-new Button('r')
-new Button('t')
-new Button('y')
-new Button('u')
-new Button('i')
-new Button('o')
-new Button('p')
-new Button('[')
-new Button(']')
-new Button('\\')
-new Button('DEL', 'del')
-new Button('Caps Lock', ['capslock', 'l-text'])
-new Button('a')
-new Button('s')
-new Button('d')
-new Button('f')
-new Button('g')
-new Button('g')
-new Button('h')
-new Button('j')
-new Button('k')
-new Button('l')
-new Button(';')
-new Button('\'')
-new Button('Enter', ['enter', 'l-text'])
-new Button('Shift', ['shift', 'l-text'])
-new Button('z')
-new Button('x')
-new Button('c')
-new Button('v')
-new Button('b')
-new Button('n')
-new Button('m')
-new Button(',')
-new Button('.')
-new Button('/')
-new Button('▲')
-new Button('Shift', ['shift', 'l-text'])
-new Button('Ctrl', ['ctrl', 'l-text'])
-new Button('Win', ['win', 'l-text'])
-new Button('Alt', ['alt', 'l-text'])
-new Button('', 'space')
-new Button('Alt', ['alt', 'l-text'])
-new Button('◄')
-new Button('▼')
-new Button('►')
-new Button('Ctrl', ['ctrl', 'l-text'])
+  if (obj.element.classList.contains('active')) {
+    obj.element.classList.remove('active');
+  }
+};
+
+const onEnable = (code, event) => {
+  const obj = keysObjectList[code];
+  if (!obj) return;
+
+  if (code !== 'CapsLock') {
+    obj.element.classList.add('active');
+  } else {
+    obj.element.classList.toggle('active');
+  }
+
+  if (obj instanceof TextButton) {
+    event.preventDefault();
+    display.add(obj.currentSymbol);
+  }
+  if (obj instanceof DynamicButton) {
+    event.preventDefault();
+  }
+
+  if (event.shiftKey) {
+    TextButton.shift = true;
+    changeSymbols();
+  }
+
+  if (event.ctrlKey && event.altKey) {
+    if (TextButton.lang === 'eng') {
+      localStorage.setItem('lang', 'ru');
+      TextButton.lang = 'ru';
+    } else {
+      localStorage.setItem('lang', 'eng');
+      TextButton.lang = 'eng';
+    }
+    changeSymbols();
+  }
+
+  if (code === 'Backspace') {
+    display.backspace();
+  } else if (code === 'Delete') {
+    display.delete();
+  }
+  if (code !== 'CapsLock') {
+    const removeEvent = () => {
+      removeActiveClass(code);
+      window.removeEventListener('mouseup', removeEvent);
+    };
+    window.addEventListener('mouseup', removeEvent);
+  } else {
+    if (TextButton.shift) {
+      TextButton.shift = false;
+      caps = false;
+    } else {
+      TextButton.shift = true;
+      caps = true;
+    }
+    changeSymbols();
+  }
+};
+
+const onDisable = (code) => {
+  if (code !== 'CapsLock') {
+    removeActiveClass(code);
+  }
+  if ((code === 'ShiftLeft' || code === 'ShiftRight') && !caps) {
+    TextButton.shift = false;
+    changeSymbols();
+  }
+};
+
+window.addEventListener('keydown', (event) => {
+  onEnable(event.code, event);
+});
+
+keyboard.addEventListener('mousedown', (event) => {
+  onEnable(event.target.dataset.code, event);
+});
+
+window.addEventListener('keyup', (event) => {
+  onDisable(event.code);
+});
+
+window.addEventListener('mouseup', (event) => {
+  onDisable(event.target.dataset.code);
+});
