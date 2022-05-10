@@ -78,6 +78,7 @@ body {
 .btn:active,
 .btn.active {
     background-color: rgb(211, 149, 15);
+    transform: scale(0.95);
 }
 
 .l-text {

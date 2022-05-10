@@ -4,7 +4,6 @@ import TextButton from './scripts/Element/Button/TextButton/TextButton';
 import DynamicButton from './scripts/Element/Button/DynamicButton/DynamicButton';
 import { keysObjectList, keysTextButtontList } from './scripts/data/keysObjectList';
 
-let caps = false;
 const changeSymbols = () => {
   keysTextButtontList.forEach((obj) => {
     obj.setSymbol();
@@ -66,12 +65,12 @@ const onEnable = (code, event) => {
     };
     window.addEventListener('mouseup', removeEvent);
   } else {
-    if (TextButton.shift) {
-      TextButton.shift = false;
-      caps = false;
+    if (TextButton.caps) {
+      // TextButton.shift = false;
+      TextButton.caps = false;
     } else {
-      TextButton.shift = true;
-      caps = true;
+      // TextButton.shift = true;
+      TextButton.caps = true;
     }
     changeSymbols();
   }
@@ -81,7 +80,7 @@ const onDisable = (code) => {
   if (code !== 'CapsLock') {
     removeActiveClass(code);
   }
-  if ((code === 'ShiftLeft' || code === 'ShiftRight') && !caps) {
+  if ((code === 'ShiftLeft' || code === 'ShiftRight')) {
     TextButton.shift = false;
     changeSymbols();
   }

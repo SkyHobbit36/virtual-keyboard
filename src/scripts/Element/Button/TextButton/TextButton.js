@@ -1,5 +1,6 @@
 import Button from '../Button';
 import keys from '../../../data/keys';
+import { textSymbolsRU, textSymbolsENG } from '../../../data/textSymbols';
 
 class TextButton extends Button {
   constructor(code, text) {
@@ -42,12 +43,12 @@ class TextButton extends Button {
   setSymbol() {
     if (TextButton.lang === 'eng') {
       // eslint-disable-next-line no-unused-expressions
-      TextButton.shift
+      TextButton.shift || (TextButton.caps && textSymbolsENG.includes(this.code))
         ? this.currentSymbol = this.engUpperCase
         : this.currentSymbol = this.engDefault;
     } else {
       // eslint-disable-next-line no-unused-expressions
-      TextButton.shift
+      TextButton.shift || (TextButton.caps && textSymbolsRU.includes(this.code))
         ? this.currentSymbol = this.ruUpperCase
         : this.currentSymbol = this.ruDefault;
     }
@@ -56,6 +57,8 @@ class TextButton extends Button {
   }
 
   static shift = false;
+
+  static caps = false;
 
   static lang = 'eng';
 }
